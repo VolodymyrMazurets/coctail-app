@@ -15,6 +15,10 @@
           <IconCoctail class="layout__icon" />
           <span>Random coctail</span>
         </el-menu-item>
+        <el-menu-item index="/filter" class="layout__aside-item">
+          <IconCoctail class="layout__icon" />
+          <span>Coctail by filter</span>
+        </el-menu-item>
       </el-menu>
     </el-aside>
 

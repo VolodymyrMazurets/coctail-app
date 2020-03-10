@@ -42,6 +42,7 @@
 import loader from '../components/loader'
 import IconBook from '../components/icons/svg/book'
 import IconCart from '../components/icons/svg/cart'
+import { transformIngridients } from '../common/helpers'
 export default {
   components: {
     loader,
@@ -67,18 +68,6 @@ export default {
     this.getRandomCoctail()
   },
   methods: {
-    transformIngridients(data, stringFirst, stringSecond) {
-      const filter = (object, filterString) =>
-        Object.entries(object)
-          .filter((item) => item[0].includes(filterString) && !!item[1])
-          .map((item) => item[1])
-      const ingridients = filter(data, stringFirst)
-      const values = filter(data, stringSecond)
-      return ingridients.map((name, idx) => {
-        const value = (values[idx] && String(values[idx])) || 'On your taste'
-        return { name, value }
-      })
-    },
     async getRandomCoctail() {
       try {
         this.loading = true
@@ -86,7 +75,7 @@ export default {
           'coctails/getRandomCoctail'
         )
         this.coctail = drinks[0]
-        this.ingredients = this.transformIngridients(
+        this.ingredients = transformIngridients(
           drinks[0],
           'strIngredient',
           'strMeasure'
