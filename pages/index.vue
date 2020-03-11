@@ -51,6 +51,13 @@ export default {
     IconCart,
     loader
   },
+  data() {
+    return {
+      coctail: {},
+      ingredients: [],
+      loading: true
+    }
+  },
   computed: {
     alcoholicBadgeColor() {
       return this.coctail.strAlcoholic === 'Alcoholic' ? 'success' : 'danger'
@@ -59,25 +66,31 @@ export default {
       return this.coctail.strAlcoholic !== 'Alcoholic'
     }
   },
-  async asyncData({ store }) {
-    try {
-      let loading = true
-      const { drinks } = await store.dispatch('coctails/getRandomCoctail')
-      const coctail = drinks[0]
-      const ingredients = transformIngridients(
+  mounted() {
+    this.getRandomCoctail()
+  },
+  methods: {
+    async getRandomCoctail() {
+      const { drinks } = await this.$store.dispatch('coctails/getRandomCoctail')
+      this.coctail = drinks[0]
+      this.ingredients = transformIngridients(
         drinks[0],
         'strIngredient',
         'strMeasure'
       )
-      loading = false
-      return { coctail, ingredients, loading }
-    } catch {
-      const coctail = []
-      const ingredients = []
-      const loading = []
-      return { coctail, ingredients, loading }
+      this.loading = false
     }
   }
+  // async asyncData({ store }) {
+  //   const { drinks } = await store.dispatch('coctails/getRandomCoctail')
+  //   const coctail = await drinks[0]
+  //   const ingredients = await transformIngridients(
+  //     drinks[0],
+  //     'strIngredient',
+  //     'strMeasure'
+  //   )
+  //   return { coctail, ingredients }
+  // }
 }
 </script>
 
