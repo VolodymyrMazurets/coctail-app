@@ -1,6 +1,6 @@
 <template>
   <div class="random">
-    <loader v-if="false" />
+    <loader v-if="loading" />
     <div v-else class="random__inner">
       <div class="random__img-wrapper">
         <img :src="`${coctail.strDrinkThumb}`" alt="" class="random__img" />
@@ -10,9 +10,11 @@
         <el-badge :value="coctail.strCategory" type="primary">
           <h1 class="random__title">{{ coctail.strDrink }}</h1>
         </el-badge>
-        <el-tag :type="alcoholicBadgeColor" class="random__badge">{{
-          coctail.strAlcoholic
-        }}</el-tag>
+        <el-tag
+          :type="alcoholicBadgeColor || 'primary'"
+          class="random__badge"
+          >{{ coctail.strAlcoholic }}</el-tag
+        >
       </div>
       <div class="random__block">
         <div :class="{ 'non-alcoholic': isAlcoholic }" class="random__info">
@@ -45,9 +47,9 @@ import IconCart from '../components/icons/svg/cart'
 import { transformIngridients } from '../common/helpers'
 export default {
   components: {
-    loader,
     IconBook,
-    IconCart
+    IconCart,
+    loader
   },
   computed: {
     alcoholicBadgeColor() {
@@ -58,14 +60,23 @@ export default {
     }
   },
   async asyncData({ store }) {
-    const { drinks } = await store.dispatch('coctails/getRandomCoctail')
-    const coctail = drinks[0]
-    const ingredients = transformIngridients(
-      drinks[0],
-      'strIngredient',
-      'strMeasure'
-    )
-    return { coctail, ingredients }
+    try {
+      let loading = true
+      const { drinks } = await store.dispatch('coctails/getRandomCoctail')
+      const coctail = drinks[0]
+      const ingredients = transformIngridients(
+        drinks[0],
+        'strIngredient',
+        'strMeasure'
+      )
+      loading = false
+      return { coctail, ingredients, loading }
+    } catch {
+      const coctail = []
+      const ingredients = []
+      const loading = []
+      return { coctail, ingredients, loading }
+    }
   }
 }
 </script>

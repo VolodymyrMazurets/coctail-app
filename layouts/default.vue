@@ -2,14 +2,12 @@
   <el-container class="layout">
     <el-aside width="250px" class="layout__aside">
       <el-menu
-        @open="handleOpen"
-        @close="handleClose"
         :default-active="$route.path"
         router
         class="el-menu-vertical-demo layout__aside-menu"
         background-color="#409EFF"
         text-color="#fff"
-        active-text-color="#fff"
+        active-text-color="purple"
       >
         <el-menu-item index="/" class="layout__aside-item">
           <IconCoctail class="layout__icon" />
@@ -18,6 +16,10 @@
         <el-menu-item index="/filter" class="layout__aside-item">
           <IconCoctail class="layout__icon" />
           <span>Coctail by filter</span>
+        </el-menu-item>
+        <el-menu-item index="/ingredients" class="layout__aside-item">
+          <IconCoctail class="layout__icon" />
+          <span>Show all ingredients</span>
         </el-menu-item>
       </el-menu>
     </el-aside>
@@ -76,12 +78,8 @@ export default {
   },
   watch: {
     error(value) {
-      this.$message.error(value.response.data.message)
+      this.$message.error(value.message)
     }
-  },
-  methods: {
-    handleOpen(key, keyPath) {},
-    handleClose(key, keyPath) {}
   }
 }
 </script>

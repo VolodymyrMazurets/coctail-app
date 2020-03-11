@@ -18,28 +18,22 @@
           :key="item.idDrink"
           class="filter__col"
         >
-          <el-card
+          <coctail-card
+            :data="item"
             @click.native="$router.push(`/filter/${item.idDrink}`)"
-            :body-style="{ padding: '0px', cursor: 'pointer' }"
-            shadow="hover"
-          >
-            <img :src="item.strDrinkThumb" class="filter__img" />
-            <div style="padding: 14px;" class="filter__row">
-              <h2>{{ item.strDrink }}</h2>
-              <el-tag
-                :type="item.strAlcoholic === 'Alcoholic' ? 'success' : 'danger'"
-                >{{ item.strAlcoholic }}</el-tag
-              >
-            </div>
-          </el-card>
+          />
         </el-col>
       </transition-group>
     </el-row>
   </div>
 </template>
 <script>
+import CoctailCard from '../../components/CoctailCard'
 export default {
   name: 'FilterPage',
+  components: {
+    CoctailCard
+  },
   data() {
     return {
       searchStr: '',
