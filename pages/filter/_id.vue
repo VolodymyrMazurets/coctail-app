@@ -84,6 +84,10 @@ export default {
     width: 100%;
     display: flex;
     align-items: center;
+    flex-direction: column;
+    @media screen and (min-width: 768px) {
+      flex-direction: row;
+    }
   }
   &__img-wrapper {
     flex-basis: 40%;

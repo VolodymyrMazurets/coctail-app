@@ -1,28 +1,60 @@
 <template>
   <el-container class="layout">
-    <el-aside width="250px" class="layout__aside">
-      <el-menu
-        :default-active="$route.path"
-        router
-        class="el-menu-vertical-demo layout__aside-menu"
-        background-color="#409EFF"
-        text-color="#fff"
-        active-text-color="purple"
-      >
-        <el-menu-item index="/" class="layout__aside-item">
-          <IconCoctail class="layout__icon" />
-          <span>Random coctail</span>
-        </el-menu-item>
-        <el-menu-item index="/filter" class="layout__aside-item">
-          <IconCoctail class="layout__icon" />
-          <span>Coctail by filter</span>
-        </el-menu-item>
-        <el-menu-item index="/ingredients" class="layout__aside-item">
-          <IconCoctail class="layout__icon" />
-          <span>Show all ingredients</span>
-        </el-menu-item>
-      </el-menu>
-    </el-aside>
+    <el-button
+      @click="menuVisibility = !menuVisibility"
+      icon="el-icon-s-unfold"
+      class="layout__burger"
+    />
+    <el-menu
+      @select="closeMenu"
+      :default-active="$route.path"
+      v-if="menuVisibility"
+      router
+      class="layout__aside-menu layout__aside-menu--mobile"
+      background-color="#409EFF"
+      text-color="#fff"
+      active-text-color="purple"
+    >
+      <el-button
+        @click="menuVisibility = !menuVisibility"
+        type="danger"
+        icon="el-icon-close"
+        class="layout__close"
+      ></el-button>
+      <el-menu-item index="/" class="layout__aside-item">
+        <IconCoctail class="layout__icon" />
+        <span>Random coctail</span>
+      </el-menu-item>
+      <el-menu-item index="/filter" class="layout__aside-item">
+        <IconCoctail class="layout__icon" />
+        <span>Coctail by filter</span>
+      </el-menu-item>
+      <el-menu-item index="/ingredients" class="layout__aside-item">
+        <IconCoctail class="layout__icon" />
+        <span>Show all ingredients</span>
+      </el-menu-item>
+    </el-menu>
+    <el-menu
+      :default-active="$route.path"
+      router
+      class="layout__aside-menu"
+      background-color="#409EFF"
+      text-color="#fff"
+      active-text-color="purple"
+    >
+      <el-menu-item index="/" class="layout__aside-item">
+        <IconCoctail class="layout__icon" />
+        <span>Random coctail</span>
+      </el-menu-item>
+      <el-menu-item index="/filter" class="layout__aside-item">
+        <IconCoctail class="layout__icon" />
+        <span>Coctail by filter</span>
+      </el-menu-item>
+      <el-menu-item index="/ingredients" class="layout__aside-item">
+        <IconCoctail class="layout__icon" />
+        <span>Show all ingredients</span>
+      </el-menu-item>
+    </el-menu>
 
     <el-container>
       <el-header class="layout__header">
@@ -40,6 +72,11 @@ import IconCoctail from '../components/icons/svg/cocktail'
 export default {
   components: {
     IconCoctail
+  },
+  data() {
+    return {
+      menuVisibility: false
+    }
   },
   computed: {
     phraseOfTheDay() {
@@ -80,19 +117,15 @@ export default {
     error(value) {
       this.$message.error(value.message)
     }
+  },
+  methods: {
+    closeMenu() {
+      this.menuVisibility = false
+    }
   }
 }
 </script>
 <style lang="scss">
-@import url('https://fonts.googleapis.com/css?family=Anton|Roboto&display=swap');
-* {
-  box-sizing: border-box;
-}
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Roboto', sans-serif;
-}
 .layout {
   height: 100vh;
   &__aside {
@@ -102,6 +135,24 @@ body {
   &__aside-menu {
     height: 100%;
     border-right: none;
+    display: none;
+    @media screen and (min-width: 768px) {
+      display: block;
+      position: initial;
+    }
+    &--mobile {
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 100;
+      padding-top: 50px;
+      transition: none;
+      display: initial;
+      @media screen and (min-width: 768px) {
+        display: none;
+      }
+    }
   }
   &__header {
     padding: 16px 24px;
@@ -109,6 +160,10 @@ body {
     font-family: 'Anton', sans-serif;
     text-align: center;
     font-size: 30px;
+    display: none;
+    @media screen and (min-width: 768px) {
+      display: block;
+    }
   }
   &__icon {
     width: 24px;
@@ -116,6 +171,24 @@ body {
     margin-right: 16px;
     position: relative;
     bottom: 4px;
+  }
+  &__burger {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    background-color: transparent;
+    @media screen and (min-width: 768px) {
+      display: none;
+    }
+  }
+  &__close {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    @media screen and (min-width: 768px) {
+      display: none;
+    }
   }
 }
 </style>

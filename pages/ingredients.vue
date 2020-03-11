@@ -8,7 +8,10 @@
     ></el-input>
     <el-row :gutter="20" v-if="ingredientsView">
       <el-col
-        :span="4"
+        :xs="24"
+        :sm="18"
+        :md="12"
+        :lg="4"
         v-for="item in pageData"
         :key="item"
         class="ingredients__col"
@@ -29,7 +32,10 @@
     </el-row>
     <el-row :gutter="20" v-else>
       <el-col
-        :span="4"
+        :xs="24"
+        :sm="18"
+        :md="12"
+        :lg="4"
         v-for="item in coctails"
         :key="item.idDrink"
         class="ingredients__col"
@@ -61,7 +67,7 @@ export default {
   name: 'Ingredients',
   data() {
     return {
-      itemPerPage: 12,
+      itemPerPage: 18,
       currentPage: 1,
       searchStr: '',
       ingredientsView: true,

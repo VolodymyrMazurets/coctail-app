@@ -81,16 +81,6 @@ export default {
       this.loading = false
     }
   }
-  // async asyncData({ store }) {
-  //   const { drinks } = await store.dispatch('coctails/getRandomCoctail')
-  //   const coctail = await drinks[0]
-  //   const ingredients = await transformIngridients(
-  //     drinks[0],
-  //     'strIngredient',
-  //     'strMeasure'
-  //   )
-  //   return { coctail, ingredients }
-  // }
 }
 </script>
 
@@ -100,14 +90,20 @@ export default {
   &__title {
     text-transform: uppercase;
     text-align: center;
-    font-size: 36px;
+    font-size: 20px;
     margin-top: 0;
+    @media screen and (min-width: 768px) {
+      font-size: 36px;
+    }
   }
   &__badge {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    bottom: 0;
+    bottom: -20px;
+    @media screen and (min-width: 768px) {
+      bottom: 0;
+    }
   }
   &__title-badge {
     width: 100%;
@@ -135,23 +131,31 @@ export default {
   &__block {
     display: flex;
     justify-content: stretch;
+    flex-direction: column;
     align-items: stretch;
+    @media screen and (min-width: 768px) {
+      flex-direction: row;
+    }
   }
   &__info {
-    width: 50%;
-    padding: 24px;
-    border-right: 1px solid #67c23a;
-    &:last-child {
-      border-right: none;
-    }
-    &.non-alcoholic {
-      border-color: #f56c6c;
+    @media screen and (min-width: 768px) {
+      padding: 24px;
+      border-right: 1px solid #67c23a;
+      width: 50%;
+      &:last-child {
+        border-right: none;
+      }
+      &.non-alcoholic {
+        border-color: #f56c6c;
+      }
     }
   }
   &__ingredients {
-    flex-basis: 50%;
-    max-width: 50%;
-    padding: 24px;
+    @media screen and (min-width: 768px) {
+      padding: 24px;
+      flex-basis: 50%;
+      max-width: 50%;
+    }
   }
   &__subtitle {
     margin-top: 0;

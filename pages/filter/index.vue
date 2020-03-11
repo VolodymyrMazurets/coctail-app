@@ -13,7 +13,10 @@
     >
       <transition-group name="list">
         <el-col
-          :span="6"
+          :xs="24"
+          :sm="18"
+          :md="12"
+          :lg="6"
           v-for="item in drinks"
           :key="item.idDrink"
           class="filter__col"
