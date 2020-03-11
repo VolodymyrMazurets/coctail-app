@@ -1,6 +1,6 @@
 <template>
   <div class="random">
-    <loader v-if="loading" />
+    <loader v-if="false" />
     <div v-else class="random__inner">
       <div class="random__img-wrapper">
         <img :src="`${coctail.strDrinkThumb}`" alt="" class="random__img" />
@@ -49,13 +49,6 @@ export default {
     IconBook,
     IconCart
   },
-  data() {
-    return {
-      coctail: [],
-      ingredients: [],
-      loading: true
-    }
-  },
   computed: {
     alcoholicBadgeColor() {
       return this.coctail.strAlcoholic === 'Alcoholic' ? 'success' : 'danger'
@@ -64,28 +57,15 @@ export default {
       return this.coctail.strAlcoholic !== 'Alcoholic'
     }
   },
-  created() {
-    this.getRandomCoctail()
-  },
-  methods: {
-    async getRandomCoctail() {
-      try {
-        this.loading = true
-        const { drinks } = await this.$store.dispatch(
-          'coctails/getRandomCoctail'
-        )
-        this.coctail = drinks[0]
-        this.ingredients = transformIngridients(
-          drinks[0],
-          'strIngredient',
-          'strMeasure'
-        )
-        this.loading = false
-      } catch (e) {
-        this.$message.success(e)
-        throw e
-      }
-    }
+  async asyncData({ store }) {
+    const { drinks } = await store.dispatch('coctails/getRandomCoctail')
+    const coctail = drinks[0]
+    const ingredients = transformIngridients(
+      drinks[0],
+      'strIngredient',
+      'strMeasure'
+    )
+    return { coctail, ingredients }
   }
 }
 </script>
