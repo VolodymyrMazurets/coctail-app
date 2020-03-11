@@ -2,12 +2,12 @@
   <div class="filter">
     <el-input
       v-model.lazy="searchStr"
-      placeholder="Please input"
+      placeholder="Please write coctail name"
       class="filter__input"
     ></el-input>
     <el-row
-      :gutter="20"
       v-loading="loading"
+      :gutter="20"
       element-loading-text="Loading..."
       element-loading-spinner="el-icon-loading"
     >
@@ -20,8 +20,8 @@
         >
           <el-card
             @click.native="$router.push(`/filter/${item.idDrink}`)"
-            shadow="hover"
             :body-style="{ padding: '0px', cursor: 'pointer' }"
+            shadow="hover"
           >
             <img :src="item.strDrinkThumb" class="filter__img" />
             <div style="padding: 14px;" class="filter__row">
@@ -47,7 +47,12 @@ export default {
       loading: true
     }
   },
-  mounted() {
+  watch: {
+    searchStr(val, oldVal) {
+      this.getCoctailByName()
+    }
+  },
+  created() {
     this.getCoctailByName()
   },
   methods: {
@@ -63,11 +68,6 @@ export default {
         this.$message.success(e)
         throw e
       }
-    }
-  },
-  watch: {
-    searchStr(val, oldVal) {
-      this.getCoctailByName()
     }
   }
 }

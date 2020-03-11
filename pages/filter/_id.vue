@@ -2,8 +2,8 @@
   <div class="coctail">
     <h2 class="coctail__name">{{ coctail.strDrink }}</h2>
     <div
-      class="coctail__card"
       v-loading="loading"
+      class="coctail__card"
       element-loading-text="Loading..."
       element-loading-spinner="el-icon-loading"
     >
@@ -18,8 +18,8 @@
           <el-table-column prop="name" label="Ingredient name">
             <template slot-scope="scope">
               <el-link
-                type="primary"
                 :href="`https://www.google.com.ua/search?q=${scope.row.name}`"
+                type="primary"
                 target="_blank"
                 >{{ scope.row.name }}</el-link
               >
@@ -41,6 +41,10 @@ import IconBook from '../../components/icons/svg/book'
 import IconRecipe from '../../components/icons/svg/cart'
 export default {
   name: 'CoctailById',
+  components: {
+    IconBook,
+    IconRecipe
+  },
   data() {
     return {
       coctail: [],
@@ -48,13 +52,8 @@ export default {
       loading: true
     }
   },
-  components: {
-    IconBook,
-    IconRecipe
-  },
-  mounted() {
+  created() {
     this.getCoctailById()
-    console.log(this.ingredients)
   },
   methods: {
     async getCoctailById() {

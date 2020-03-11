@@ -64,7 +64,7 @@ export default {
       return this.coctail.strAlcoholic !== 'Alcoholic'
     }
   },
-  mounted() {
+  created() {
     this.getRandomCoctail()
   },
   methods: {
